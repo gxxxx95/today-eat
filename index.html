@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#fffaf3" />
+    <meta name="description" content="今天吃什么——帮你决定点外卖还是自己做" />
+    <title>今天吃什么</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="ambient ambient-one"></div>
+    <div class="ambient ambient-two"></div>
+
+    <main class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="#" aria-label="今天吃什么首页">
+          <span class="brand-mark">吃</span>
+          <span>
+            <strong>今天吃什么</strong>
+            <small>每天少纠结一点</small>
+          </span>
+        </a>
+        <button class="icon-button avatar-button" type="button" aria-label="个人设置">😋</button>
+      </header>
+
+      <nav class="mode-switch" aria-label="用餐方式">
+        <button class="mode-button active" type="button" data-view="takeaway">
+          <span>🛵</span> 外卖吃什么
+        </button>
+        <button class="mode-button" type="button" data-view="cook">
+          <span>🍳</span> 自己做什么
+        </button>
+      </nav>
+
+      <section id="takeawayView" class="view active" aria-labelledby="takeawayTitle">
+        <div class="section-heading">
+          <div>
+            <span class="eyebrow">交给一点点运气</span>
+            <h1 id="takeawayTitle">转一下，马上开饭</h1>
+            <p>已经帮你装进 <strong id="optionCount">8</strong> 种好吃的</p>
+          </div>
+          <span class="mood-sticker" aria-hidden="true">不纠结<br /><b>就现在!</b></span>
+        </div>
+
+        <section class="wheel-card" aria-label="外卖食物转盘">
+          <div class="wheel-stage">
+            <div class="wheel-pointer" aria-hidden="true">
+              <span></span>
+            </div>
+            <div class="wheel-shadow"></div>
+            <div id="wheel" class="wheel" role="img" aria-label="外卖类型随机转盘">
+              <div id="wheelLabels" class="wheel-labels"></div>
+              <div class="wheel-ring"></div>
+              <button id="spinButton" class="spin-button" type="button" aria-label="开始旋转转盘">
+                <span>开始</span>
+                <small>GO!</small>
+              </button>
+            </div>
+          </div>
+          <p id="spinHint" class="spin-hint"><span>✨</span> 点一下，让命运替你选</p>
+          <div class="wheel-actions">
+            <button id="editWheelButton" class="soft-button" type="button"><span>⚙️</span> 编辑转盘</button>
+            <button id="openStoresButton" class="soft-button" type="button"><span>❤️</span> 常点店家</button>
+          </div>
+        </section>
+
+        <section class="tiny-inspiration">
+          <div class="inspiration-icon">💡</div>
+          <div>
+            <span>今天的小提示</span>
+            <p>先转一次再说，纠结超过 10 分钟只会更饿。</p>
+          </div>
+        </section>
+      </section>
+
+      <section id="cookView" class="view" aria-labelledby="cookTitle" hidden>
+        <div class="section-heading cook-heading">
+          <div>
+            <span class="eyebrow green">看看家里有什么</span>
+            <h1 id="cookTitle">今晚，自己露一手</h1>
+            <p>选条件，为你搭配合适的家常菜</p>
+          </div>
+          <button id="openFridgeButton" class="fridge-mini" type="button">
+            <span>🧊</span>
+            <b id="fridgeCount">5</b>
+            <small>冰箱食材</small>
+          </button>
+        </div>
+
+        <section class="filter-card">
+          <div class="filter-title">
+            <span class="step-number">1</span>
+            <div><h2>选食材</h2><p>可以多选，标记的是冰箱里已有的</p></div>
+          </div>
+          <div id="ingredientChips" class="chip-grid"></div>
+          <button id="manageFridgeInline" class="text-button" type="button">管理我的冰箱 <span>→</span></button>
+        </section>
+
+        <section class="filter-card compact-card">
+          <div class="filter-title">
+            <span class="step-number">2</span>
+            <div><h2>怎么做</h2><p>选择喜欢的烹饪方式</p></div>
+          </div>
+          <div id="methodChips" class="choice-row" role="group" aria-label="烹饪方式">
+            <button class="choice-chip active" type="button" data-method="不限">随便</button>
+            <button class="choice-chip" type="button" data-method="炒">🔥 炒</button>
+            <button class="choice-chip" type="button" data-method="煮">🥣 煮</button>
+            <button class="choice-chip" type="button" data-method="蒸">♨️ 蒸</button>
+            <button class="choice-chip" type="button" data-method="烤">🧤 烤</button>
+          </div>
+        </section>
+
+        <section class="filter-card compact-card">
+          <div class="filter-title">
+            <span class="step-number">3</span>
+            <div><h2>有多少时间</h2><p>从洗菜到出锅</p></div>
+          </div>
+          <div id="timeChips" class="time-grid" role="group" aria-label="烹饪时长">
+            <button class="time-chip active" type="button" data-time="15"><b>15</b><span>分钟内</span></button>
+            <button class="time-chip" type="button" data-time="30"><b>30</b><span>分钟内</span></button>
+            <button class="time-chip" type="button" data-time="60"><b>60</b><span>分钟内</span></button>
+            <button class="time-chip" type="button" data-time="999"><b>∞</b><span>慢慢做</span></button>
+          </div>
+        </section>
+
+        <button id="findRecipeButton" class="primary-button cook-cta" type="button">
+          <span>帮我找菜谱</span><b>→</b>
+        </button>
+
+        <section id="recipeResults" class="recipe-results" aria-live="polite"></section>
+      </section>
+
+      <footer class="app-footer">
+        <span>吃好每一顿，也照顾好自己</span>
+        <span aria-hidden="true">🥢</span>
+      </footer>
+    </main>
+
+    <div id="overlay" class="overlay" hidden></div>
+
+    <section id="resultModal" class="modal result-modal" role="dialog" aria-modal="true" aria-labelledby="resultTitle" hidden>
+      <button class="modal-close" type="button" data-close-modal aria-label="关闭">×</button>
+      <div class="result-celebration" aria-hidden="true">🎉</div>
+      <span class="modal-kicker">今天就吃</span>
+      <h2 id="resultTitle">麻辣烫</h2>
+      <p class="result-copy">好！不许再纠结了，附近这些店可以试试</p>
+      <div class="demo-note"><span>i</span> 当前为原型演示店铺，距离与评分为示例数据</div>
+      <div id="restaurantList" class="restaurant-list"></div>
+      <div class="modal-actions">
+        <button id="spinAgainButton" class="secondary-button" type="button">再转一次</button>
+        <button class="primary-button close-result" type="button" data-close-modal>就吃这个</button>
+      </div>
+    </section>
+
+    <section id="wheelModal" class="modal sheet-modal" role="dialog" aria-modal="true" aria-labelledby="wheelModalTitle" hidden>
+      <div class="sheet-handle"></div>
+      <div class="modal-header">
+        <div><span class="modal-kicker">我的口味我做主</span><h2 id="wheelModalTitle">编辑转盘</h2></div>
+        <button class="modal-close" type="button" data-close-modal aria-label="关闭">×</button>
+      </div>
+      <p class="sheet-copy">勾选想吃的类型，至少保留 2 项。</p>
+      <div id="wheelOptionList" class="option-list"></div>
+      <form id="addOptionForm" class="inline-form">
+        <input id="newOptionEmoji" aria-label="食物图标" maxlength="2" value="🍱" />
+        <input id="newOptionName" aria-label="食物类型" maxlength="8" placeholder="添加新选项" required />
+        <button type="submit" aria-label="添加">＋</button>
+      </form>
+      <button id="saveWheelButton" class="primary-button full-button" type="button">保存我的转盘</button>
+    </section>
+
+    <section id="storesModal" class="modal sheet-modal" role="dialog" aria-modal="true" aria-labelledby="storesModalTitle" hidden>
+      <div class="sheet-handle"></div>
+      <div class="modal-header">
+        <div><span class="modal-kicker">越用越懂你</span><h2 id="storesModalTitle">我的常点店家</h2></div>
+        <button class="modal-close" type="button" data-close-modal aria-label="关闭">×</button>
+      </div>
+      <p class="sheet-copy">添加常点店家。下次转到相应类型时，它会优先出现。</p>
+      <div id="favoriteStoreList" class="favorite-store-list"></div>
+      <form id="addStoreForm" class="stack-form">
+        <label>店家名称<input id="storeNameInput" maxlength="16" placeholder="例如：楼下那家麻辣烫" required /></label>
+        <label>主营类型<input id="storeCategoryInput" maxlength="8" placeholder="例如：麻辣烫" required /></label>
+        <button class="primary-button full-button" type="submit">添加店家</button>
+      </form>
+    </section>
+
+    <section id="fridgeModal" class="modal sheet-modal" role="dialog" aria-modal="true" aria-labelledby="fridgeModalTitle" hidden>
+      <div class="sheet-handle"></div>
+      <div class="modal-header">
+        <div><span class="modal-kicker">先吃掉快过期的</span><h2 id="fridgeModalTitle">我的冰箱</h2></div>
+        <button class="modal-close" type="button" data-close-modal aria-label="关闭">×</button>
+      </div>
+      <p class="sheet-copy">记录大概数量就够了，选菜时会显示“家里有”。</p>
+      <div id="fridgeList" class="fridge-list"></div>
+      <form id="addIngredientForm" class="inline-form fridge-form">
+        <input id="newIngredientName" aria-label="食材名称" maxlength="8" placeholder="新增食材" required />
+        <input id="newIngredientAmount" aria-label="食材数量" type="number" min="1" max="99" value="1" required />
+        <button type="submit" aria-label="添加">＋</button>
+      </form>
+      <button id="saveFridgeButton" class="primary-button full-button" type="button">保存冰箱</button>
+    </section>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
